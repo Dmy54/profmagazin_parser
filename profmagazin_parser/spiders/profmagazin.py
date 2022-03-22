@@ -6,7 +6,7 @@ class ProfmagazinSpider(scrapy.Spider):
     name = "profmagazin"
     allowed_domains = ["profmagazin.ru"]
     # выбираем количество страниц, которое парсить (на текущий момент 551)
-    pages = 100
+    pages = 551
 
     def start_requests(self):
         default_url = "https://profmagazin.ru/allprods.php/?page="
