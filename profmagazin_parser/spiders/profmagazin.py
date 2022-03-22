@@ -1,5 +1,6 @@
 import scrapy
 
+
 class ProfmagazinSpiderList(scrapy.Spider):
     name = "profmagazin"
     allowed_domains = ["profmagazin.ru"]
@@ -24,7 +25,7 @@ class ProfmagazinSpiderDetail(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
-    def parse(self, response):
+    def parse(self, response, **kwargs):
         page = response.url.split("/")[-2]
         filename = f'quotes-{page}.html'
         with open(filename, 'wb') as f:

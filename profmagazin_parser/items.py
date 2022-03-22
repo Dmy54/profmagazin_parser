@@ -3,6 +3,7 @@ import scrapy
 class ProfmagazinParserListItem(scrapy.Item):
     url = scrapy.Field()
 
+
 class ProfmagazinParserItem(scrapy.Item):
     categories = scrapy.Field()
     price = scrapy.Field()
