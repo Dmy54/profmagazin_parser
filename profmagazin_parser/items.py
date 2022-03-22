@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
-
 import scrapy
 
 
 class ProfmagazinParserItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    categories = scrapy.Field()
+    price = scrapy.Field()
+    med_wholesale = scrapy.Field()
+    huge_wholesale = scrapy.Field()
+    description = scrapy.Field()
+    specification = scrapy.Field()
+    images = scrapy.Field()
+    name = scrapy.Field()
+    article = scrapy.Field()
