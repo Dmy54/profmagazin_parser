@@ -5,7 +5,7 @@ from profmagazin_parser.items import ProfmagazinParserItem
 class ProfmagazinSpider(scrapy.Spider):
     name = "profmagazin"
     allowed_domains = ["profmagazin.ru"]
-    pages = 5
+    pages = 100
 
     def start_requests(self):
         default_url = "https://profmagazin.ru/allprods.php/?page="
@@ -15,19 +15,20 @@ class ProfmagazinSpider(scrapy.Spider):
 
     def parse_pages(self, response, **kwargs):
         for url in response.css('.ci-title').xpath('@href').getall():
-            url = "https://profmagazin.ru/" + url
+            url = "https://profmagazin.ru" + url
             yield scrapy.Request(url, callback=self.parse)
 
     def parse(self, response, **kwargs):
         self.logger.info("Getting response %s", response.url)
         item = ProfmagazinParserItem()
-        item['name'] = response.xpath('').get()
-        item['category'] = response.xpath('').get()
-        item['price'] = response.xpath('').get()
-        item['med_wholesale'] = response.xpath('').get()
-        item['huge_wholesale'] = response.xpath('').get()
-        item['description'] = response.xpath('').get()
-        item['specification'] = response.xpath('').get()
-        item['images'] = response.xpath('').get()
-        item['article'] = response.xpath('').get()
+        item['href'] = response.url
+        item['name'] = response.xpath('//h1[@class="content-title"]/text()').get(default='not-found')
+        item['category'] = ''.join(response.xpath('//ul[@class="breadcrumbs"]//text()').extract()).replace('\t', '')
+        item['price'] = response.xpath('//div[@class="cb-price-text"]/meta[@itemprop="price"]/@content').get(default='not-found')
+        item['med_wholesale'] = response.xpath('//div[@class="sub-prices"]/div[1]/text()').get(default='not-found')
+        item['huge_wholesale'] = response.xpath('//div[@class="sub-prices"]/div[2]/text()').get(default='not-found')
+        item['description'] = ''.join(response.xpath('//div[@class="card-desc-other-view"]//text()').extract()).replace('\r', '')
+        item['specification'] = ''.join(response.xpath('//div[contains(@class, "tab") and not(contains(@class, "active"))]/p//text()').extract())
+        item['image'] = "https://profmagazin.ru" + response.xpath('//div[@class="card-desc-other-view"]/img/@src').get(default='not-found')
+        item['article'] = response.xpath('//div[@class="cb-article"]/text()').get(default='not-found')
         return item

@@ -8,6 +8,7 @@ class ProfmagazinParserItem(scrapy.Item):
     huge_wholesale = scrapy.Field()
     description = scrapy.Field()
     specification = scrapy.Field()
-    images = scrapy.Field()
+    image = scrapy.Field()
     name = scrapy.Field()
     article = scrapy.Field()
+    href = scrapy.Field()
