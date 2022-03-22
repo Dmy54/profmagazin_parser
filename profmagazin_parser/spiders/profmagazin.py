@@ -5,6 +5,7 @@ from profmagazin_parser.items import ProfmagazinParserItem
 class ProfmagazinSpider(scrapy.Spider):
     name = "profmagazin"
     allowed_domains = ["profmagazin.ru"]
+    # выбираем количество страниц, которое парсить (на текущий момент 551)
     pages = 100
 
     def start_requests(self):
@@ -28,7 +29,7 @@ class ProfmagazinSpider(scrapy.Spider):
         item['med_wholesale'] = response.xpath('//div[@class="sub-prices"]/div[1]/text()').get(default='not-found')
         item['huge_wholesale'] = response.xpath('//div[@class="sub-prices"]/div[2]/text()').get(default='not-found')
         item['description'] = ''.join(response.xpath('//div[@class="card-desc-other-view"]//text()').extract()).replace('\r', '')
-        item['specification'] = ''.join(response.xpath('//div[contains(@class, "tab") and not(contains(@class, "active"))]/p//text()').extract())
+        item['specification'] = ';'.join(response.xpath('//div[contains(@class, "tab") and not(contains(@class, "active"))]/p//text()').extract())
         item['image'] = "https://profmagazin.ru" + response.xpath('//div[@class="card-desc-other-view"]/img/@src').get(default='not-found')
         item['article'] = response.xpath('//div[@class="cb-article"]/text()').get(default='not-found')
         return item
