@@ -21,4 +21,13 @@ class ProfmagazinSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         self.logger.info("Getting response %s", response.url)
         item = ProfmagazinParserItem()
+        item['name'] = response.xpath('').get()
+        item['category'] = response.xpath('').get()
+        item['price'] = response.xpath('').get()
+        item['med_wholesale'] = response.xpath('').get()
+        item['huge_wholesale'] = response.xpath('').get()
+        item['description'] = response.xpath('').get()
+        item['specification'] = response.xpath('').get()
+        item['images'] = response.xpath('').get()
+        item['article'] = response.xpath('').get()
         return item

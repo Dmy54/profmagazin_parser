@@ -2,7 +2,7 @@ import scrapy
 
 
 class ProfmagazinParserItem(scrapy.Item):
-    categories = scrapy.Field()
+    category = scrapy.Field()
     price = scrapy.Field()
     med_wholesale = scrapy.Field()
     huge_wholesale = scrapy.Field()
